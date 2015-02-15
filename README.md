@@ -146,6 +146,9 @@ When you specify an output file, this will be the file name used to compile **al
 ### showErrorWithWindow
 Set to `true` to see parse errors in a pop up window
 
+### source_map
+Set to `true` to create a source map file
+
 # Project settings
 You can use the configuration settings that are described above and apply them to just the project you are working on. In order to do this you need to manually alter the `.sublime-project` file. A default project file looks like this:
 

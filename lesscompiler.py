@@ -18,6 +18,7 @@ SETTING_MINIFY = "minify"
 SETTING_MINNAME = "minName"
 SETTING_OUTPUTDIR = "outputDir"
 SETTING_OUTPUTFILE = "outputFile"
+SETTING_SOURCEMAP = "source_map"
 
 
 #define methods to convert css, either the current file or all
@@ -45,7 +46,8 @@ class Compiler:
         'minimised': project_settings.get(SETTING_MINIFY, settings.get(SETTING_MINIFY, True)),
         'min_name': project_settings.get(SETTING_MINNAME, settings.get(SETTING_MINNAME, True)),
         'output_dir': project_settings.get(SETTING_OUTPUTDIR, settings.get(SETTING_OUTPUTDIR)),
-        'output_file': project_settings.get(SETTING_OUTPUTFILE, settings.get(SETTING_OUTPUTFILE))
+        'output_file': project_settings.get(SETTING_OUTPUTFILE, settings.get(SETTING_OUTPUTFILE)),
+        'source_map': project_settings.get(SETTING_SOURCEMAP, settings.get(SETTING_SOURCEMAP, False))
     }
 
   # for command 'LessToCssCommand' and 'AutoLessToCssCommand'
@@ -165,6 +167,10 @@ class Compiler:
     # combine the folder for the CSS file with the file name, this will be our target
     css = os.path.join(dirs['css'], sub_path)
 
+    # Determine source map directory
+    if settings['source_map']:
+      source_map = re.sub( '\.css$', '.map', css )
+
     # create directories
     # get the name of the folder where we need to save the CSS file
     output_dir = os.path.dirname(css)
@@ -188,6 +194,10 @@ class Compiler:
     else:
       # the call for non minified CSS is the same on all platforms
       cmd = [lessc_command, less, css, "--verbose"]
+
+    # Add source map option
+    if source_map:
+      cmd.insert( 1, "--source-map={0}".format( source_map ) )
 
     print("[less2css] Converting " + less + " to " + css)
 
