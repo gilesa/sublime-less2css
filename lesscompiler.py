@@ -170,7 +170,7 @@ class Compiler:
     # Determine source map directory
     if settings['source_map']:
       source_map = re.sub( '\.css$', '.map', css )
-    else
+    else:
       source_map = False
 
     # create directories
