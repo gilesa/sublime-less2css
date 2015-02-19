@@ -170,6 +170,8 @@ class Compiler:
     # Determine source map directory
     if settings['source_map']:
       source_map = re.sub( '\.css$', '.map', css )
+    else
+      source_map = False
 
     # create directories
     # get the name of the folder where we need to save the CSS file
